@@ -1,14 +1,8 @@
 package com.example.graphqljwt.entity;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Collection;
+import javax.persistence.*;
 
 @Table
 @Entity
@@ -18,6 +12,7 @@ import java.util.Collection;
 @NoArgsConstructor
 public class UserEntity{
     @Id
+    @GeneratedValue
     private Integer id;
 
     @Column(unique = true)
