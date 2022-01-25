@@ -20,15 +20,4 @@ public class GraphqlJwtApplication {
 
 	@Autowired
 	private UserRepo userRepo;
-
-	@PostConstruct
-	void init(){
-		List<UserEntity> users = Stream.of(new UserEntity(1, "user1", "password"),
-				new UserEntity(4, "user4", "password"),
-				new UserEntity(3, "user3", "password"),
-				new UserEntity(2, "user2", "password")
-				).collect(Collectors.toList());
-
-		userRepo.saveAll(users);
-	}
 }

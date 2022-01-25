@@ -30,28 +30,4 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Unable to find user");
         return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
-
-    public UserReturn login(String username, String password) throws Exception {
-        UserReturn user = new UserReturn();
-        UserEntity userFromDB = userRepo.findByUsername(username);
-        if(userFromDB==null)
-            throw new Exception("User not found");
-        user.setId(userFromDB.getId());
-        user.setUsername(userFromDB.getUsername());
-        user.setPassword(userFromDB.getPassword());
-        user.setJwt(jwtUtil.generateToken(new User(userFromDB.getUsername(), userFromDB.getPassword(), new ArrayList<>())));
-        return user;
-    }
-
-//    public UserReturn register(String username, String password) throws Exception {
-//        User user = userRepo.findByUsername(username);
-//        if(user!=null)
-//            throw new Exception("User already present");
-//        user = new UserEntity();
-//        user.setUsername(username);
-//        user.setPassword(password);
-//        UserDetails savedUser = userRepo.save(user);
-//        String jwt = jwtUtil.generateToken(new User(savedUser.getUsername(), savedUser.getPassword()));
-//        return new UserReturn(savedUser)
-//    }
 }

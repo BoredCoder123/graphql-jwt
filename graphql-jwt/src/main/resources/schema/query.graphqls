@@ -1,17 +1,9 @@
 type Query{
     firstQuery: String,
     getuser(username: String): UserDetails
-    login(username: String, password: String): UserReturn
 }
 
 type UserDetails{
     username: String,
     password: String
-}
-
-type UserReturn{
-    id: Int
-    username: String,
-    password: String,
-    jwt: String
 }

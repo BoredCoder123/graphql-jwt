@@ -1,5 +1,4 @@
 package com.example.graphqljwt.filter;
-
 import com.example.graphqljwt.service.UserService;
 import com.example.graphqljwt.util.JwtUtil;
 import lombok.extern.log4j.Log4j2;
@@ -30,20 +29,18 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("In filter");
         String authorizationHeader = request.getHeader("Authorization");
-        String asd = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        log.info("asd");
-//        if(authorizationHeader.equals("Token not found"))
-//            throw new ServletException();
-
+        if(authorizationHeader==null)
+            throw new ServletException();
         String token = null;
         String userName = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader.startsWith("Bearer ")) {
             token = authorizationHeader.substring(7);
             userName = jwtUtil.extractUsername(token);
         }
+        else
+            throw new ServletException();
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = userService.loadUserByUsername(userName);
@@ -56,7 +53,11 @@ public class JwtFilter extends OncePerRequestFilter {
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
+            else
+                throw new ServletException();
         }
+        else
+            throw new ServletException();
         filterChain.doFilter(request, response);
     }
 }
