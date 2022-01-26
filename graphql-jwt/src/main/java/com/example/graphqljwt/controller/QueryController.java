@@ -15,7 +15,7 @@ public class QueryController implements GraphQLQueryResolver {
     @Autowired
     private UserService userService;
 
-    public UserDetails getuser(String username){
-        return userService.loadUserByUsername(username);
+    public UserDetails getuser(String username) throws Exception {
+        return userService.loadByUsername(username);
     }
 }
